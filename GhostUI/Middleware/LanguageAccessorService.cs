@@ -1,6 +1,7 @@
 ﻿using GhostUI.Abstraction;
 using Microsoft.AspNetCore.Http;
 using System;
+using static GhostUI.Abstraction.Interfaces;
 
 namespace GhostUI.Middleware
 {
