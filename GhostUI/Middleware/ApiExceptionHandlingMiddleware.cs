@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using NJsonSchema.Validation;
+
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;

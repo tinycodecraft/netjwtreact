@@ -39,7 +39,7 @@ export const DROPDOWN_TEST_DATA: SelectOption[] = [
  * HealthChecks/Swagger response path config
  */
 
-export const BASEURL= process.env.NODE_ENV === 'production' ? 'http://localhost:8080': 'http://localhost:52580';
+export const BASEURL= process.env.NODE_ENV === 'production' ? 'http://localhost:8085': 'http://localhost:52580';
 
 export const NUGET_URL_CONFIG = {
   HealthUi: `${BASEURL}/healthchecks-ui`,

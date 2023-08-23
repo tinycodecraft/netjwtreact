@@ -85,76 +85,13 @@ builder.Services.AddMvc(opt => opt.SuppressAsyncSuffixInActionNames = false);
 // In production, the React files will be served from this directory
 builder.Services.AddSpaStaticFiles(opt => opt.RootPath = $"{spaSrcPath}/dist");
 
-// (NSwage library) Register the Swagger services (using OpenApi 3.0)
-// this inject language preference to support different language.
-builder.Services.AddOpenApiDocument(settings =>
-{
-    settings.Version = "v1";
-    settings.Title = "GhostUI API";
-    settings.Description = "Detailed Description of API";
 
-    //* JWT security setup for nswag *//
-    //settings.AddSecurity("JWT", Enumerable.Empty<string>(), new NSwag.OpenApiSecurityScheme
-    //{
-    //    Type = NSwag.OpenApiSecuritySchemeType.ApiKey, //this requires "Bearer " prefix in the auth header
-    //    Name="Authorization",
-    //    In= NSwag.OpenApiSecurityApiKeyLocation.Header,
-    //    Description = "Type into the textbox: Bearer {your JWT token}"
-
-
-    //});
-    //settings.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
-
-
-    
-    //*If you want language specific work you can try this following code*//
-    //settings.OperationProcessors.Add(new LanguageHeaderProcessor());
-});
-
-
-//*If you want language specific work you can try this following code*//
-
-//builder.Services.AddHttpContextAccessor();
-
-//builder.Services.AddScoped<ILanguageService, LanguageAccessorService>();
 
 
 //*Jwt setup*//
 var jwtissuer = builder.Configuration["JWTAuth:Issuer"];
 var jwtaudience = builder.Configuration["JWTAuth:Audience"];
-//builder.Services.AddAuthentication(opt =>
-//{
-//    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//}).AddJwtBearer(options =>
-//{
-//    options.SaveToken = true;
-//    options.Events = new JwtBearerEvents
-//    {
-//        OnAuthenticationFailed = jwtctx =>
-//        {
-//            if (jwtctx.Exception.GetType() == typeof(SecurityTokenExpiredException))
-//            {
-//                jwtctx.Response.Headers.Add("IS-TOKEN-EXPIRED", "true");
-//            }
-//            return Task.CompletedTask;
-//        }
-//    };
-//    options.TokenValidationParameters = new TokenValidationParameters()
-//    {
-//        ClockSkew = TimeSpan.Zero,
-        
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        ValidIssuer = jwtissuer,
-//        ValidAudience = jwtaudience,
-//        IssuerSigningKey = new SymmetricSecurityKey(
-//            Encoding.UTF8.GetBytes("!AnywhereSecret!")
-//        ),
-//    };
-//});
+
 
 var app = builder.Build();
 
@@ -196,31 +133,7 @@ app.UseHealthChecks("/healthchecks-json", new HealthCheckOptions()
 });
 
 // Register the Swagger generator and the Swagger UI middlewares
-// NSwage.MsBuild + adding automation config in GhostUI.csproj makes this part of the build step (updates to API will be handled automatically)
-app.UseOpenApi(settings=>
-{
-    //settings.PostProcess = (doc, request) =>
-    //{
-    //    doc.Info.Version = "v1";
-    //    doc.Info.Title = "GhostUI Api for react";
-    //    doc.Info.Description = "Detail of Api";
-    //    doc.Info.Contact = new NSwag.OpenApiContact
-    //    {
-    //        Name = "TinyCodeCraft",
-    //        Email = "raymond.cw.yau@outlook.com",
-    //        Url = "twitter.com/rcwyau",
 
-    //    };
-    //    doc.Info.License = new NSwag.OpenApiLicense
-    //    {
-    //        Name = "GhostShell",
-    //        Url = "https://ghostshell.com"
-    //    };
-
-
-    //};
-
-});
 
 //add enrich parameter for each logging request
 app.UseSerilogRequestLogging( option=>
@@ -231,7 +144,7 @@ app.UseSerilogRequestLogging( option=>
 
     };
 });
-app.UseSwaggerUi3();
+
 app.UseHttpsRedirection();
 app.UseRouting();
 //*Jwt enabled for auth*//
