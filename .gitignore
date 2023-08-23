@@ -3,7 +3,6 @@
 *.suo
 *.user
 *.userosscache
-*.sln
 *.sln.docstates
 *.ntvs*
 *.njsproj
