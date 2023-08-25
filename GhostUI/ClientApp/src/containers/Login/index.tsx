@@ -36,6 +36,7 @@ const Login: FunctionComponent = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const status = useAppSelector<AuthStatusEnum>((state) => state.auth.status);
+  const error = useAppSelector<string|undefined>((state) => state.auth.error);
 
   const dispatchAuthStatus = useCallback(
     (status: AuthStatusEnum): void => {
@@ -45,6 +46,10 @@ const Login: FunctionComponent = () => {
   );
 
   const onFailedAuth = useCallback((): void => {
+    if(!toast.isActive(toastIdRef.current) && error)
+    {
+      toastIdRef.current = toast.error(error);
+    }
     dispatchAuthStatus(AuthStatusEnum.NONE);
     dispatch(resetState());
   }, [dispatch, dispatchAuthStatus]);

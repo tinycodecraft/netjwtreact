@@ -16,7 +16,11 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using GhostUI.Abstraction.Models;
 using GhostUI.Abstraction.Tools;
 using GhostUI.Abstraction;
-using GhostUI.DB.Models;
+
+using GhostUI.UserDB;
+using static GhostUI.Abstraction.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebSockets;
 //using Serilog.Core;
 //using System.Linq;
 //using System.Reflection.Metadata;
@@ -57,7 +61,25 @@ builder.Services.Configure<AuthSetting>(authsetting);
 
 
 // Add services to the container.
-builder.Services.AddDbContext<IdenContext>();
+
+builder.Services.AddDbContext<JwtDB>();
+builder.Services
+    .AddIdentityCore<IdentityUser>(opt =>
+    {
+        opt.User.RequireUniqueEmail = false;
+        opt.Password.RequireNonAlphanumeric = false;
+        opt.Password.RequireDigit= false;
+        opt.Password.RequireLowercase= false;
+        opt.Password.RequireUppercase= false;
+        opt.SignIn.RequireConfirmedPhoneNumber = false;
+        opt.SignIn.RequireConfirmedEmail= false;
+        opt.Password.RequiredLength = 3;
+        
+    }
+    )
+    .AddEntityFrameworkStores<JwtDB>()
+    ;
+builder.Services.AddScoped<IJwtManager,JwtManager>();
 //hosting environment variable in iwebhostenvironment
 //var isproduction = builder.Environment.IsProduction();
 

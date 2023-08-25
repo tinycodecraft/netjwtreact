@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
-using GhostUI.DB.Models;
+
 using System.Linq;
+using GhostUI.UserDB;
+using static GhostUI.Abstraction.Interfaces;
+using GhostUI.Abstraction.Tools;
 
 namespace GhostUI.Controllers
 {
@@ -18,13 +21,15 @@ namespace GhostUI.Controllers
         private readonly IHubContext<UsersHub> _hubContext;
 
         private readonly ILogger _logger;
-        private readonly IdenContext _context;
+        private readonly JwtDB _context;
+        private readonly IJwtManager mgr;
 
-        public AuthController(IHubContext<UsersHub> usersHub,ILogger<AuthController> logger,IdenContext db)
+        public AuthController(IHubContext<UsersHub> usersHub,ILogger<AuthController> logger, JwtDB db,IJwtManager itmgr)
         {
             _hubContext = usersHub;
             _logger = logger;
             _context = db;
+            mgr = itmgr;
         }
 
         [HttpPost]
@@ -32,14 +37,18 @@ namespace GhostUI.Controllers
         public async Task<IActionResult> Login([FromBody]Credentials request)
         {
             _logger.LogInformation("Login api is called.");
-            var founduser = _context.AspNetUsers.FirstOrDefault();
-            if (founduser != null)
-                _logger.LogInformation($"One user found is: {founduser.UserName}");
+            var haserror =await mgr.Authenticate(request.UserName,request.Password);
+
+            if(haserror.HasError())
+            {
+                return Ok(new AuthUser("fail", "", request.UserName, haserror)); 
+            }
+
 
             await _hubContext.Clients.All.SendAsync("UserLogin");
 
             var token = Guid.NewGuid().ToString();
-            var authUser = new AuthUser("success", token, request?.UserName ?? "");
+            var authUser = new AuthUser("success", token, request?.UserName ?? "","");
 
             return Ok(authUser);
         }

@@ -35,6 +35,8 @@
     <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.10" />
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
@@ -46,7 +48,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GhostUI.Abstraction\GhostUI.Abstraction.csproj" />
-    <ProjectReference Include="..\GhostUI.DB\GhostUI.DB.csproj" />
+    <ProjectReference Include="..\GhostUI.UserDB\GhostUI.UserDB.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,5 +5,7 @@
         string Status   { get; }
         string Token    { get; }
         string UserName { get; }
+
+        string Error { get;  }
     }
 }

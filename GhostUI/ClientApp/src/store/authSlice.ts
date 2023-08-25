@@ -21,6 +21,7 @@ export type AuthUser = {
   token?: string;
   userName?: string;
   status: AuthStatusEnum;
+  error?: string;
 };
 
 export type AuthState = AuthUser & { isAuthenticated: boolean; };
@@ -29,17 +30,19 @@ const initialState: AuthState = {
   token: '',
   userName: '',
   isAuthenticated: false,
-  status: AuthStatusEnum.NONE
+  status: AuthStatusEnum.NONE,
+  error: ''
 };
 
 const replaceState = (
   state: AuthState,
-  { status, token, userName, isAuthenticated }: AuthState
+  { status, token, userName, isAuthenticated, error }: AuthState
 ) => {
   state.token = token;
   state.status = status;
   state.userName = userName;
   state.isAuthenticated = isAuthenticated;
+  state.error = error;
 };
 
 export const authSlice = createSlice({
@@ -63,7 +66,7 @@ export const loginAsync = createAsyncThunk(
   async (credentials: Credentials, { dispatch }) => {
     try {
       const authUser = await AuthApi.loginAsync(credentials);
-      const payload = { ...authUser, isAuthenticated: true };
+      const payload = { ...authUser, isAuthenticated: !authUser.error };
       dispatch(setUserLogin(payload));
     } catch (e) {
       dispatch(setAuthStatus(AuthStatusEnum.FAIL));

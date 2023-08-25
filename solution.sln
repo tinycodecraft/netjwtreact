@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostUI", "GhostUI\GhostUI.csproj", "{07B28075-ED26-412D-9CB6-3CD29C2AC86F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostUI.Abstraction", "GhostUI.Abstraction\GhostUI.Abstraction.csproj", "{5AE151FE-3293-4F8F-901A-6FCFCE18A5E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostUI.Abstraction", "GhostUI.Abstraction\GhostUI.Abstraction.csproj", "{5AE151FE-3293-4F8F-901A-6FCFCE18A5E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostUI.DB", "GhostUI.DB\GhostUI.DB.csproj", "{B5269D06-3C37-4164-9730-48A3CF4B6772}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostUI.UserDB", "GhostUI.UserDB\GhostUI.UserDB.csproj", "{A0ACFC30-5F3A-451B-8D1C-A5A244EFEDD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{5AE151FE-3293-4F8F-901A-6FCFCE18A5E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AE151FE-3293-4F8F-901A-6FCFCE18A5E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AE151FE-3293-4F8F-901A-6FCFCE18A5E5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B5269D06-3C37-4164-9730-48A3CF4B6772}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5269D06-3C37-4164-9730-48A3CF4B6772}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5269D06-3C37-4164-9730-48A3CF4B6772}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5269D06-3C37-4164-9730-48A3CF4B6772}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0ACFC30-5F3A-451B-8D1C-A5A244EFEDD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0ACFC30-5F3A-451B-8D1C-A5A244EFEDD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0ACFC30-5F3A-451B-8D1C-A5A244EFEDD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0ACFC30-5F3A-451B-8D1C-A5A244EFEDD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
