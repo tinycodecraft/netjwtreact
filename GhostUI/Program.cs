@@ -13,6 +13,10 @@ using System;
 using GhostUI.Middleware;
 using GhostUI.Services;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using GhostUI.Abstraction.Models;
+using GhostUI.Abstraction.Tools;
+using GhostUI.Abstraction;
+using GhostUI.DB.Models;
 //using Serilog.Core;
 //using System.Linq;
 //using System.Reflection.Metadata;
@@ -44,6 +48,16 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
     //WebRootPath = "wwwroot"
 });
 
+var authsetting = builder.Configuration.GetSection(Constants.Setting.AuthSetting);
+var encryptionService = new StringEncrypService();
+authsetting[nameof(AuthSetting.Secret)] = encryptionService.EncryptString(authsetting[nameof(AuthSetting.SecretKey)] ?? "");
+
+builder.Services.Configure<AuthSetting>(authsetting);
+
+
+
+// Add services to the container.
+builder.Services.AddDbContext<IdenContext>();
 //hosting environment variable in iwebhostenvironment
 //var isproduction = builder.Environment.IsProduction();
 
@@ -89,8 +103,8 @@ builder.Services.AddSpaStaticFiles(opt => opt.RootPath = $"{spaSrcPath}/dist");
 
 
 //*Jwt setup*//
-var jwtissuer = builder.Configuration["JWTAuth:Issuer"];
-var jwtaudience = builder.Configuration["JWTAuth:Audience"];
+//var jwtissuer = builder.Configuration["JWTAuth:Issuer"];
+//var jwtaudience = builder.Configuration["JWTAuth:Audience"];
 
 
 var app = builder.Build();

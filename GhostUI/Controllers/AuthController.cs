@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using GhostUI.DB.Models;
+using System.Linq;
 
 namespace GhostUI.Controllers
 {
@@ -16,11 +18,13 @@ namespace GhostUI.Controllers
         private readonly IHubContext<UsersHub> _hubContext;
 
         private readonly ILogger _logger;
+        private readonly IdenContext _context;
 
-        public AuthController(IHubContext<UsersHub> usersHub,ILogger<AuthController> logger)
+        public AuthController(IHubContext<UsersHub> usersHub,ILogger<AuthController> logger,IdenContext db)
         {
             _hubContext = usersHub;
             _logger = logger;
+            _context = db;
         }
 
         [HttpPost]
@@ -28,6 +32,9 @@ namespace GhostUI.Controllers
         public async Task<IActionResult> Login([FromBody]Credentials request)
         {
             _logger.LogInformation("Login api is called.");
+            var founduser = _context.AspNetUsers.FirstOrDefault();
+            if (founduser != null)
+                _logger.LogInformation($"One user found is: {founduser.UserName}");
 
             await _hubContext.Clients.All.SendAsync("UserLogin");
 

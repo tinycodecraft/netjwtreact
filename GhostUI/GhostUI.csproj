@@ -2,6 +2,8 @@
 
   <PropertyGroup>
 	  <TargetFramework>net7.0</TargetFramework>
+	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	  <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <Nullable>enable</Nullable>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
@@ -44,6 +46,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GhostUI.Abstraction\GhostUI.Abstraction.csproj" />
+    <ProjectReference Include="..\GhostUI.DB\GhostUI.DB.csproj" />
   </ItemGroup>
 
   <ItemGroup>
