@@ -60,7 +60,8 @@ builder.Services.Configure<AuthSetting>(authsetting);
 
 
 
-// Add services to the container.
+//Setup IdentityDB Context and UserManager
+//If not, only DB Context service to be added
 
 builder.Services.AddDbContext<JwtDB>();
 builder.Services
