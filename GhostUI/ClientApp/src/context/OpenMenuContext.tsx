@@ -30,9 +30,9 @@ export const OpenMenuProvider = ({
   const ref = useRef<HTMLAnchorElement | null>(null)  
 
   const triggerHandler = useCallback((e: Event) => {
-    console.log('my open menu ref: ',ref, ' have target: ', e.target);
+    
     if (sideAction == 'lostFocus' && !ref.current?.contains(e.target as Node)) {
-      console.log('any chance for', MenuOpened);
+      
 
       MenuOpened && OpenMenu(false)
     }

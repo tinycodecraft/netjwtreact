@@ -51,7 +51,7 @@ export const getForecastsAsync = createAsyncThunk(
     // If param startDateIndex === state.startDateIndex, do not perform action
     
     const { weather: { startDateIndex: stateIdx} } = (getState as () => RootState)();
-    console.log('getForecast called with getstate',(getState() as WeatherState).startDateIndex, 'with startDateIndex', stateIdx)
+    
     
     if (startDateIndex === stateIdx) {
       return;

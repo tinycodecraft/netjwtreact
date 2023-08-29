@@ -12,6 +12,7 @@ import UserNameInput from "./UserNameInput";
 import PasswordInput from "./PasswordInput";
 import { useNavigate } from "react-router-dom";
 import { toast, type Id } from "react-toastify";
+import alerttoast from 'react-hot-toast'
 import { Authenticator } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../store";
 import BasedGhostLogoPNG from "../../assets/image/based-ghost-main.png";
@@ -36,8 +37,7 @@ const Login: FunctionComponent = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const status = useAppSelector<AuthStatusEnum>((state) => state.auth.status);
-  const error = useAppSelector<string|undefined>((state) => state.auth.error);
-
+  const error =  useAppSelector<string|undefined>((state) => state.auth.error);
   const dispatchAuthStatus = useCallback(
     (status: AuthStatusEnum): void => {
       dispatch(setAuthStatus(status));
@@ -45,11 +45,10 @@ const Login: FunctionComponent = () => {
     [dispatch]
   );
 
-  const onFailedAuth = useCallback((): void => {
-    if(!toast.isActive(toastIdRef.current) && error)
-    {
-      toastIdRef.current = toast.error(error);
-    }
+  const onFailedAuth = useCallback((error:any): void => {
+
+    alerttoast.error(`login fails with ${error}`)
+
     dispatchAuthStatus(AuthStatusEnum.NONE);
     dispatch(resetState());
   }, [dispatch, dispatchAuthStatus]);
@@ -130,6 +129,7 @@ const Login: FunctionComponent = () => {
               />
             </form>
             <Authenticator
+              error={error}
               authStatus={status}
               handleOnFail={onFailedAuth}
               handleOnSuccess={onSuccessfulAuth}

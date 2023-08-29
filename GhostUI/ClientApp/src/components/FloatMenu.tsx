@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const FloatMenu = () => {
     
-    console.log('float menu rerendering');
+    
     const isLoggedIn = useIsLoggedIn();
 
     const { MenuOpened,OpenMenu,ref }= useContext(OpenMenuContext)

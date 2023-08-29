@@ -3,7 +3,7 @@ import { ReactComponent as ReactCoreSVG } from '../../assets/image/ReactCore.svg
 
 const Dashboard: FunctionComponent = () => {
 
-  console.log('Home is rerendering');
+  
 
   return (
 

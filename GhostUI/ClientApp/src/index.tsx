@@ -10,6 +10,7 @@ import reportWebVitals from './reportWebVitals';
 import { SignalRApi } from './api/signalr.service';
 import { toastifyProps, registerIcons } from './config';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import { Toaster } from 'react-hot-toast';
 
 registerIcons();
 
@@ -33,6 +34,7 @@ function AppRenderer() {
         </Provider>
       </BrowserRouter>
       <ToastContainer {...toastifyProps} />
+      <Toaster />
     </Fragment>
   );
 }

@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 type AuthenticatorProps = Readonly<{
   delay?: number;
   authStatus: AuthStatusEnum;
+  error: any;
   handleOnFail: (...args: typeof PropTypes.any[]) => void|typeof PropTypes.any;
   handleOnSuccess: (...args: typeof PropTypes.any[]) => void|typeof PropTypes.any;
 }>;
@@ -70,6 +71,7 @@ const AuthenticatorWrapper = styled.div<Pick<AuthenticatorProps, 'authStatus'>>`
 
 const Authenticator = memo<AuthenticatorProps>(({
   authStatus,
+  error,
   handleOnFail,
   handleOnSuccess,
   delay = 1500
@@ -77,7 +79,7 @@ const Authenticator = memo<AuthenticatorProps>(({
   useEffect(() => {
     const authHandler = setTimeout(() => {
       switch (authStatus) {
-        case AuthStatusEnum.FAIL: return handleOnFail();
+        case AuthStatusEnum.FAIL: return handleOnFail(error);
         case AuthStatusEnum.SUCCESS: return handleOnSuccess();
         default: return;
       }
@@ -86,7 +88,7 @@ const Authenticator = memo<AuthenticatorProps>(({
     return () => {
       clearTimeout(authHandler);
     }
-  }, [authStatus, delay, handleOnFail, handleOnSuccess]);
+  }, [authStatus,error, delay, handleOnFail, handleOnSuccess]);
 
   if (!authStatus || authStatus === AuthStatusEnum.NONE) {
     return null;

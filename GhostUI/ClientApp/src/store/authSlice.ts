@@ -38,6 +38,7 @@ const replaceState = (
   state: AuthState,
   { status, token, userName, isAuthenticated, error }: AuthState
 ) => {
+  console.log(`any error: ${error} for ${userName} with status ${status}`);
   state.token = token;
   state.status = status;
   state.userName = userName;
@@ -66,6 +67,7 @@ export const loginAsync = createAsyncThunk(
   async (credentials: Credentials, { dispatch }) => {
     try {
       const authUser = await AuthApi.loginAsync(credentials);
+      console.log(authUser);
       const payload = { ...authUser, isAuthenticated: !authUser.error };
       dispatch(setUserLogin(payload));
     } catch (e) {
