@@ -21,6 +21,7 @@ using GhostUI.UserDB;
 using static GhostUI.Abstraction.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebSockets;
+using Microsoft.AspNetCore.DataProtection;
 //using Serilog.Core;
 //using System.Linq;
 //using System.Reflection.Metadata;
@@ -69,17 +70,17 @@ builder.Services
     {
         opt.User.RequireUniqueEmail = false;
         opt.Password.RequireNonAlphanumeric = false;
-        opt.Password.RequireDigit= false;
-        opt.Password.RequireLowercase= false;
-        opt.Password.RequireUppercase= false;
+        opt.Password.RequireDigit = false;
+        opt.Password.RequireLowercase = false;
+        opt.Password.RequireUppercase = false;
         opt.SignIn.RequireConfirmedPhoneNumber = false;
-        opt.SignIn.RequireConfirmedEmail= false;
+        opt.SignIn.RequireConfirmedEmail = true;
         opt.Password.RequiredLength = 3;
-        
+
     }
     )
     .AddEntityFrameworkStores<JwtDB>()
-    ;
+    .AddDefaultTokenProviders();
 builder.Services.AddScoped<IJwtManager,JwtManager>();
 //hosting environment variable in iwebhostenvironment
 //var isproduction = builder.Environment.IsProduction();
