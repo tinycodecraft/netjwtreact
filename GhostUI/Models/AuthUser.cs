@@ -8,12 +8,15 @@
         public string Token    { get; }
         public string UserName { get; }
 
-        public AuthUser(string status, string token, string userName, string error)
+        public bool NeedNew { get;  }
+
+        public AuthUser(string status, string token, string userName, string error="", bool needNew=false)
         {
             Status = status;
             Token = token;
             UserName = userName;
             Error = error;
+            NeedNew = needNew;
         }
     }
 }

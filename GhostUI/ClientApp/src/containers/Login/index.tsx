@@ -32,12 +32,14 @@ const Login: FunctionComponent = () => {
 
   const userNameInput = useTextInput("");
   const passwordInput = useTextInput("", showPassword ? "text" : "password");
+  const newPasswordInput = useTextInput("", showPassword ? "text" : "password");
 
   // react-redux hooks state/actions
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const status = useAppSelector<AuthStatusEnum>((state) => state.auth.status);
   const error =  useAppSelector<string|undefined>((state) => state.auth.error);
+  const needNew =  useAppSelector<boolean>((state) => state.auth.needNew);
   const dispatchAuthStatus = useCallback(
     (status: AuthStatusEnum): void => {
       dispatch(setAuthStatus(status));
@@ -73,11 +75,14 @@ const Login: FunctionComponent = () => {
       return;
     }
 
-    if (!userNameInput.hasValue || !passwordInput.hasValue) {
+    if (!userNameInput.hasValue || !passwordInput.hasValue || (needNew && !newPasswordInput.hasValue)) {
       // Run invalidInputs error and display toast notification (if one is not already active)
       setIsInputInvalid(true);
       if (!toast.isActive(toastIdRef.current)) {
-        toastIdRef.current = toast.error("Enter user name/password");
+        
+        const plusnew = needNew ? " and new password" : "";
+
+        toastIdRef.current = toast.error(`Enter user name/password${plusnew}` );
       }
     } else {
       // Clear any toast notifications and prepare state for Login request stub / run login request stub
@@ -90,6 +95,7 @@ const Login: FunctionComponent = () => {
           rememberMe,
           userName: userNameInput.value,
           password: passwordInput.value,
+          newPassword: newPasswordInput.value,
         };
 
         dispatch(loginAsync(credentials));
@@ -118,11 +124,21 @@ const Login: FunctionComponent = () => {
                 isInputInvalid={isInputInvalid}
               />
               <PasswordInput
+                needNew={false}
                 textInput={passwordInput}
                 showPassword={showPassword}
                 isInputInvalid={isInputInvalid}
                 toggleShowPassword={onToggleShowPassword}
               />
+              {needNew && 
+              <PasswordInput
+              needNew={needNew}
+              textInput={newPasswordInput}
+              showPassword={showPassword}
+              isInputInvalid={isInputInvalid}
+              toggleShowPassword={onToggleShowPassword}
+            />              
+              }
               <LoginControls
                 rememberMe={rememberMe}
                 handleRememberMeCheck={onRememberMeCheck}

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using GhostUI.Abstraction.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,13 +39,13 @@ namespace GhostUI.UserDB
         /// <param name="username">user login</param>
         /// <param name="password">password for login</param>
         /// <returns></returns>
-        public async Task<string> Authenticate(string username, string password)
+        public async Task<ILoginError?> Authenticate(string username, string password)
         {
             var user = await mgr.FindByNameAsync(username);
             
             if (user == null)
             {
-                return $"{username} could not be found";
+                return new LoginError { Error = $"{username} could not be found" };
 
             }
 
@@ -55,10 +56,10 @@ namespace GhostUI.UserDB
             {
                 var token = await mgr.GeneratePasswordResetTokenAsync(user);
                 var succeeded = await mgr.ResetPasswordAsync(user, token, "abc123");
-                return $"{username} does not match the password in DB, it's now reset to abc123";
+                return new LoginError { Error = $"{username} does not match the password in DB, it's now reset to abc123" , NeedNew=true};
             }
             
-            return string.Empty;
+            return null;
         }
     }
 }

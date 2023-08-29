@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 type PasswordInputProps = Readonly<{
   showPassword: boolean;
   isInputInvalid: boolean;
+  needNew: boolean;
   toggleShowPassword: () => void;
   textInput: ReturnType<typeof useTextInput>;
 }>;
@@ -13,6 +14,7 @@ type PasswordInputProps = Readonly<{
 const PasswordInput = memo<PasswordInputProps>(({
   textInput,
   showPassword,
+  needNew,
   isInputInvalid,
   toggleShowPassword
 }: PasswordInputProps) => {
@@ -30,7 +32,7 @@ const PasswordInput = memo<PasswordInputProps>(({
         <input
           {...bindToInput}
           className={className}
-          placeholder="Password"
+          placeholder={needNew ? "New Password": "Password"} 
           autoComplete="password"
         />
         <span className="icon is-left">
@@ -48,6 +50,6 @@ const PasswordInput = memo<PasswordInputProps>(({
   );
 });
 
-PasswordInput.displayName = 'PasswordInput';
+PasswordInput.displayName =  'PasswordInput';
 
 export default PasswordInput;

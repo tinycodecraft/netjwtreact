@@ -37,18 +37,18 @@ namespace GhostUI.Controllers
         public async Task<IActionResult> Login([FromBody]Credentials request)
         {
             _logger.LogInformation("Login api is called.");
-            var haserror =await mgr.Authenticate(request.UserName,request.Password);
+            var loginError =await mgr.Authenticate(request.UserName,request.Password);
            
-            if(haserror.HasError())
+            if(loginError.Error.HasError())
             {
-                return Ok(new AuthUser("fail", "", request.UserName, haserror)); 
+                return Ok(new AuthUser("fail", "", request.UserName, loginError.Error,loginError.NeedNew)); 
             }
 
 
             await _hubContext.Clients.All.SendAsync("UserLogin");
 
             var token = Guid.NewGuid().ToString();
-            var authUser = new AuthUser("success", token, request?.UserName ?? "","");
+            var authUser = new AuthUser("success", token, request?.UserName ?? "");
 
             return Ok(authUser);
         }

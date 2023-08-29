@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 type AuthenticatorProps = Readonly<{
   delay?: number;
   authStatus: AuthStatusEnum;
-  error: any;
+  error: any;  
   handleOnFail: (...args: typeof PropTypes.any[]) => void|typeof PropTypes.any;
   handleOnSuccess: (...args: typeof PropTypes.any[]) => void|typeof PropTypes.any;
 }>;
@@ -71,7 +71,7 @@ const AuthenticatorWrapper = styled.div<Pick<AuthenticatorProps, 'authStatus'>>`
 
 const Authenticator = memo<AuthenticatorProps>(({
   authStatus,
-  error,
+  error,  
   handleOnFail,
   handleOnSuccess,
   delay = 1500

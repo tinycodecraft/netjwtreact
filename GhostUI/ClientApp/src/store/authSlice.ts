@@ -14,6 +14,7 @@ export type AuthStatusEnum = typeof AuthStatusEnum[keyof typeof AuthStatusEnum];
 export type Credentials = {
   userName?: string;
   password?: string;
+  newPassword?:string;
   rememberMe?: boolean;
 };
 
@@ -22,6 +23,7 @@ export type AuthUser = {
   userName?: string;
   status: AuthStatusEnum;
   error?: string;
+  needNew: boolean;
 };
 
 export type AuthState = AuthUser & { isAuthenticated: boolean; };
@@ -31,18 +33,26 @@ const initialState: AuthState = {
   userName: '',
   isAuthenticated: false,
   status: AuthStatusEnum.NONE,
+  needNew: false,
   error: ''
 };
 
 const replaceState = (
   state: AuthState,
-  { status, token, userName, isAuthenticated, error }: AuthState
+  { status, token, userName, isAuthenticated, error,needNew }: AuthState,
+  resetOnly = false,
+
 ) => {
-  console.log(`any error: ${error} for ${userName} with status ${status}`);
+  console.log(`${error} with status ${status} and neednew status: ${resetOnly}`);
   state.token = token;
   state.status = status;
   state.userName = userName;
   state.isAuthenticated = isAuthenticated;
+  if(!resetOnly)
+  {
+    state.needNew = needNew;
+  }
+  
   state.error = error;
 };
 
@@ -56,8 +66,8 @@ export const authSlice = createSlice({
     setUserLogin: (state, action: PayloadAction<AuthState>) => {
       replaceState(state, action.payload);
     },
-    resetState: (state) => {
-      replaceState(state, initialState);
+    resetState: (state) => {      
+      replaceState(state, initialState,state.needNew);      
     }
   }
 });
