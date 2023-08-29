@@ -38,7 +38,7 @@ namespace GhostUI.Controllers
         {
             _logger.LogInformation("Login api is called.");
             var haserror =await mgr.Authenticate(request.UserName,request.Password);
-
+           
             if(haserror.HasError())
             {
                 return Ok(new AuthUser("fail", "", request.UserName, haserror)); 

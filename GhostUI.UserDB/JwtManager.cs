@@ -22,7 +22,9 @@ namespace GhostUI.UserDB
         public async Task<string> Register(string username, string password)
         {
             var result = await mgr.CreateAsync(new IdentityUser { UserName = username, Email = $"{username}@mail.com" }, password);
-            
+            //var user = await mgr.FindByNameAsync(username);
+            //var emailtoken = await mgr.GenerateEmailConfirmationTokenAsync(user);
+            //var confirmed = await mgr.ConfirmEmailAsync(user, emailtoken);
             if (result.Succeeded)
             {
                 return "";
@@ -30,6 +32,12 @@ namespace GhostUI.UserDB
             return  string.Join("\n", result.Errors.Select(e=> e.Description));
         }
 
+        /// <summary>
+        /// Please register the user with confirmemail token generated with created user
+        /// </summary>
+        /// <param name="username">user login</param>
+        /// <param name="password">password for login</param>
+        /// <returns></returns>
         public async Task<string> Authenticate(string username, string password)
         {
             var user = await mgr.FindByNameAsync(username);
