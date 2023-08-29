@@ -33,7 +33,8 @@
         "camelcase": "error",
         "spaced-comment": "warn",        
         "no-duplicate-imports": "error" ,
-        "@typescript-eslint/non-nullable-type-assertion-style": "warn" 
+        "@typescript-eslint/non-nullable-type-assertion-style": "warn" ,
+        "@typescript-eslint/no-explicit-any": "off"
         
     },
     "settings": {
