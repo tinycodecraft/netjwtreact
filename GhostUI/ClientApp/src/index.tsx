@@ -11,6 +11,7 @@ import { SignalRApi } from './api/signalr.service';
 import { toastifyProps, registerIcons } from './config';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { Toaster } from 'react-hot-toast';
+import { ThemeProvider } from '@material-tailwind/react';
 
 registerIcons();
 
@@ -29,7 +30,10 @@ function AppRenderer() {
       <BrowserRouter>
         <Provider store={store}>
           <StrictMode>
+            <ThemeProvider>
             <App />
+            </ThemeProvider>
+            
           </StrictMode>
         </Provider>
       </BrowserRouter>
