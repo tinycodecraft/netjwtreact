@@ -24,7 +24,7 @@ export const LoginProvider = ({ children }: { children: React.ReactNode }) => {
   const [userName, setUserName] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [newPassword, setNewPassword] = useState<string>('')
-  const [show, setShow] = useState<boolean>(false)
+  const [show, setShow] = useState<boolean>(true)
   const [isInvalid, setInvalid] = useState<boolean>(false)
   const [rememberMe,setRememberMe] = useState<boolean>(false)
 

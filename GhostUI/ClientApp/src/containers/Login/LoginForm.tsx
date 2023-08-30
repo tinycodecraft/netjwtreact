@@ -14,8 +14,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const LoginForm: FunctionComponent = () => {
   const toastIdRef = useRef<Id>('')
-  const { userName, setUserName, password, setPassword, newPassword, setNewPassword, toggleShow, rememberMe, show, isInvalid, setInvalid, setRememberMe } =
-    useContext(LoginContext)
+  const {
+    userName,
+    setUserName,
+    password,
+    setPassword,
+    newPassword,
+    setNewPassword,
+    toggleShow,
+    rememberMe,
+    show,
+    isInvalid,
+    setInvalid,
+    setRememberMe,
+  } = useContext(LoginContext)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const status = useAppSelector<AuthStatusEnum>((state) => state.auth.status)
@@ -97,7 +109,7 @@ const LoginForm: FunctionComponent = () => {
                 <Input
                   variant='outlined'
                   label='Password'
-                  type={show ? 'password': 'text'}
+                  type={show ? 'password' : 'text'}
                   crossOrigin
                   value={password}
                   error={isInvalid}
@@ -108,7 +120,7 @@ const LoginForm: FunctionComponent = () => {
                   <Input
                     variant='outlined'
                     label='New Password'
-                    type={show ? 'password': 'text'}
+                    type={show ? 'password' : 'text'}
                     crossOrigin
                     value={newPassword}
                     error={isInvalid}
@@ -127,9 +139,9 @@ const LoginForm: FunctionComponent = () => {
                 />
               </div>
 
-              <Button type='submit' color='green'>
-                Login
-                <FontAwesomeIcon icon='sign-in-alt' />{' '}
+              <Button type='submit' color='green' fullWidth>
+                Login{" "}
+                <FontAwesomeIcon icon='sign-in-alt' />
               </Button>
               <Authenticator error={error} authStatus={status} handleOnFail={onFailedAuth} handleOnSuccess={onSuccessfulAuth} />
             </form>
