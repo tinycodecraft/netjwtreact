@@ -37,7 +37,7 @@ namespace GhostUI.Controllers
         public async Task<IActionResult> Login([FromBody]Credentials request)
         {
             _logger.LogInformation("Login api is called.");
-            var loginError =await mgr.Authenticate(request.UserName,request.Password);
+            var loginError =await mgr.Authenticate(request.UserName,request.Password, request.NewPassword);
            
             if(loginError!=null && loginError.Error.HasError())
             {

@@ -39,7 +39,7 @@ namespace GhostUI.UserDB
         /// <param name="username">user login</param>
         /// <param name="password">password for login</param>
         /// <returns></returns>
-        public async Task<ILoginError?> Authenticate(string username, string password)
+        public async Task<ILoginError?> Authenticate(string username, string password, string? newpassword=null)
         {
             var user = await mgr.FindByNameAsync(username);
             
@@ -52,11 +52,19 @@ namespace GhostUI.UserDB
             var valid = await mgr.CheckPasswordAsync(user, password);
 
 
+
             if (!valid)
             {
                 var token = await mgr.GeneratePasswordResetTokenAsync(user);
                 var succeeded = await mgr.ResetPasswordAsync(user, token, "abc123");
-                return new LoginError { Error = $"{username} does not match the password in DB, it's now reset to abc123" , NeedNew=true};
+                return new LoginError { Error = $"{username} does not match the password in DB, it's now reset to abc123", NeedNew = true };
+            }
+            else if (!string.IsNullOrEmpty(newpassword))
+            {
+                var result = await mgr.ChangePasswordAsync(user, password, newpassword);
+                if (result.Succeeded)
+                    return null;
+                return new LoginError { Error = $"{username} could not change the password with error {string.Join("/n", result.Errors)}", NeedNew = false };
             }
             
             return null;

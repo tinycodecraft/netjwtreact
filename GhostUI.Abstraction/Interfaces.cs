@@ -16,7 +16,7 @@
 
         public interface IJwtManager
         {
-            Task<ILoginError?> Authenticate(string username, string password);
+            Task<ILoginError?> Authenticate(string username, string password,string? newpassword=null);
             Task<string> Register(string username, string password);
         }
     }
