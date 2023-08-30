@@ -101,7 +101,7 @@ const LoginForm: FunctionComponent = () => {
                   variant='outlined'
                   label='User Name'
                   type='text'
-                  crossOrigin
+                  
                   value={userName}
                   error={isInvalid}
                   onChange={(e) => setUserName && setUserName(e.target.value)}
@@ -110,7 +110,7 @@ const LoginForm: FunctionComponent = () => {
                   variant='outlined'
                   label='Password'
                   type={show ? 'password' : 'text'}
-                  crossOrigin
+                  
                   value={password}
                   error={isInvalid}
                   onChange={(e) => setPassword && setPassword(e.target.value)}
@@ -121,7 +121,7 @@ const LoginForm: FunctionComponent = () => {
                     variant='outlined'
                     label='New Password'
                     type={show ? 'password' : 'text'}
-                    crossOrigin
+                    
                     value={newPassword}
                     error={isInvalid}
                     onChange={(e) => setNewPassword && setNewPassword(e.target.value)}
@@ -133,7 +133,7 @@ const LoginForm: FunctionComponent = () => {
                 <Checkbox
                   label='Remember Me'
                   checked={rememberMe}
-                  crossOrigin
+                  
                   ripple={false}
                   onChange={() => setRememberMe && setRememberMe(!rememberMe)}
                 />
