@@ -26,12 +26,15 @@ const LoginForm: FunctionComponent = () => {
     show,
     isInvalid,
     setInvalid,
+    lastError,
+    setLastError,
     setRememberMe,
   } = useContext(LoginContext)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const status = useAppSelector<AuthStatusEnum>((state) => state.auth.status)
   const error = useAppSelector<string | undefined>((state) => state.auth.error)
+  
   const newShow = useAppSelector<boolean>((state) => state.auth.needNew)
   const dispatchAuthStatus = useCallback(
     (status: AuthStatusEnum): void => {
@@ -42,7 +45,7 @@ const LoginForm: FunctionComponent = () => {
   const onFailedAuth = useCallback(
     (error: any): void => {
       alerttoast.error(`login fails with ${error}`)
-
+      setLastError && setLastError(error)
       dispatchAuthStatus(AuthStatusEnum.NONE)
       dispatch(resetState())
       setInvalid && setInvalid(true)
@@ -97,6 +100,7 @@ const LoginForm: FunctionComponent = () => {
             <img className='block ml-[auto] mr-[auto]' width='170' aria-hidden id='login-img' alt='based-ghost-logo' src={BasedGhostLogoPNG} />
             <form onSubmit={handleLogin}>
               <div className='mb-4 flex flex-col gap-2'>
+                {lastError && <Typography variant='small' color='red' className='!text-left mb-0'>{lastError}</Typography>}
                 <Input
                   variant='outlined'
                   label='User Name'

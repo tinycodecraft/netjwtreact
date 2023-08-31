@@ -13,6 +13,8 @@ interface LoginContextProps {
   setShow: (value: SetStateAction<boolean>) => void
   isInvalid: boolean
   setInvalid: (value: SetStateAction<boolean>) => void
+  lastError:string;
+  setLastError: (value:SetStateAction<string>) => void
 
   rememberMe: boolean
   setRememberMe: (value: SetStateAction<boolean>) => void
@@ -26,7 +28,8 @@ export const LoginProvider = ({ children }: { children: React.ReactNode }) => {
   const [newPassword, setNewPassword] = useState<string>('')
   const [show, setShow] = useState<boolean>(true)
   const [isInvalid, setInvalid] = useState<boolean>(false)
-  const [rememberMe,setRememberMe] = useState<boolean>(false)
+  const [lastError, setLastError] = useState<string>('')
+  const [rememberMe, setRememberMe] = useState<boolean>(false)
 
   const switchShow = useCallback((): void => {
     setShow(!show)
@@ -43,7 +46,8 @@ export const LoginProvider = ({ children }: { children: React.ReactNode }) => {
         setNewPassword,
         show,
         setShow,
-
+        lastError,
+        setLastError,
         isInvalid,
         setInvalid,
         toggleShow: switchShow,
