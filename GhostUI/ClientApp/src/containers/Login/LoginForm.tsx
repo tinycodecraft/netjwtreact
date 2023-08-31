@@ -91,7 +91,7 @@ const LoginForm: FunctionComponent = () => {
     <section className='section section-login'>
       <div className='container has-text-centered'>
         <div className='column is-4 is-offset-4'>
-          <h3 className='title'>Login</h3>
+          <h3 className='title font-fira'>Login</h3>
           <p className='subtitle'>Please login to proceed</p>
           <div className='box login-box'>
             <img className='block ml-[auto] mr-[auto]' width='170' aria-hidden id='login-img' alt='based-ghost-logo' src={BasedGhostLogoPNG} />
