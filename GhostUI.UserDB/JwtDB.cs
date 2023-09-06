@@ -3,27 +3,43 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Reflection.Emit;
 
 namespace GhostUI.UserDB
 {
     public class JwtDB: IdentityDbContext<IdentityUser>
     {
+        IHostEnvironment _env;
         
-        public JwtDB(DbContextOptions<JwtDB> options) : base(options)
+        public JwtDB(DbContextOptions<JwtDB> options,IHostEnvironment env) : base(options)
         {
+            _env = env;
             
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(@Directory.GetCurrentDirectory() + "/../GhostUI/appsettings.json")
-                .Build();
+            IConfigurationRoot configuration = null;
+            
+            if (!_env.IsProduction())
+            {
+                configuration = new ConfigurationBuilder()
+                                    .SetBasePath(Directory.GetCurrentDirectory())
+                                    .AddJsonFile(@Directory.GetCurrentDirectory() + "/../GhostUI/appsettings.json")
+                                    .Build();
+            }
+            else
+            {
+                configuration = new ConfigurationBuilder()
+                                    .SetBasePath(Directory.GetCurrentDirectory())
+                                    .AddJsonFile(@Directory.GetCurrentDirectory() + "/appsettings.json",optional: false,reloadOnChange:true)
+                                    .AddJsonFile(@Directory.GetCurrentDirectory() + $"/appsettings.{_env.EnvironmentName}.json",optional:true)
+                                    .Build();
+            }
+            
             var builder = new DbContextOptionsBuilder<JwtDB>();
             var connectionString = configuration.GetConnectionString("jwtDB");
             optionsBuilder.UseNpgsql(connectionString, opt => opt.MigrationsAssembly("GhostUI.UserDB"));
@@ -51,6 +67,12 @@ namespace GhostUI.UserDB
 
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<JwtDB>
     {
+        IHostEnvironment _env;
+        
+        public DesignTimeDbContextFactory(IHostEnvironment env) { 
+            _env = env;
+            
+        }
         public JwtDB CreateDbContext(string[] args)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
@@ -60,7 +82,7 @@ namespace GhostUI.UserDB
             var builder = new DbContextOptionsBuilder<JwtDB>();
             var connectionString = configuration.GetConnectionString("jwtDB");
             builder.UseNpgsql(connectionString, opt => opt.MigrationsAssembly("GhostUI.UserDB"));
-            return new JwtDB(builder.Options);
+            return new JwtDB(builder.Options,_env);
         }
     }
 }

@@ -11,8 +11,8 @@ export const DropZone: FC<{ children: ReactNode, id: UniqueIdentifier }> = ({ ch
   };
 
   return (
-    <li ref={setNodeRef} style={style}>
+    <ul ref={setNodeRef} style={style}>
       {children}
-    </li>
+    </ul>
   );
 }
