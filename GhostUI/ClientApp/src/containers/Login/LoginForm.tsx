@@ -99,7 +99,7 @@ const LoginForm: FunctionComponent = () => {
           <div className='box login-box'>
             <img className='block ml-[auto] mr-[auto]' width='170' aria-hidden id='login-img' alt='based-ghost-logo' src={BasedGhostLogoPNG} />
             <form onSubmit={handleLogin}>
-              <div className='mb-4 flex flex-col gap-2'>
+              <div className='form-login'>
                 {lastError && <Typography variant='small' color='red' className='!text-left mb-0'>{lastError}</Typography>}
                 <Input
                   variant='outlined'

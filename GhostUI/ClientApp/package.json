@@ -98,7 +98,7 @@
     "@types/webpack-env": "^1.18.0",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
-    "autoprefixer": "^10.4.14",
+    "autoprefixer": "^10.4.15",
     "env-cmd": "^10.1.0",
     "eslint": "~8.44.0",
     "eslint-config-prettier": "~8.5.0",
